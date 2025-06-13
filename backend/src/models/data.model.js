@@ -6,15 +6,21 @@ export const dataSchema = new Schema(
   {
     end_year: {
       type: String,
-         },
+    },
     intensity: {
       type: Number,
-      required: true,
-      min: [0, 'Intensity must be a positive number'],
+      min: [0, "Intensity must be a positive number"],
     },
     sector: {
       type: String,
-      enum: ['Energy', 'Agriculture', 'Technology', 'Healthcare', 'Finance'],
+      enum: [
+        "Energy",
+        "Agriculture",
+        "Technology",
+        "Healthcare",
+        "Finance",
+        "Environment",
+      ], // added
       required: true,
     },
     topic: String,
@@ -22,20 +28,20 @@ export const dataSchema = new Schema(
     url: String,
     region: {
       type: String,
-      enum: ['Northern America', 'Europe', 'Asia', 'Africa', 'Australia'], 
+    },
+    sector: {
+      type: String,
     },
     start_year: {
       type: String,
-    
     },
     impact: String,
-    added: { 
+    added: {
       type: Date,
       required: true,
     },
-    published: { 
-      type: Date, 
-      required: true,
+    published: {
+      type: Date,
     },
     country: String,
     relevance: Number,
@@ -44,7 +50,7 @@ export const dataSchema = new Schema(
     title: String,
     likelihood: Number,
   },
-  { timestamps: true } 
+  { timestamps: true }
 );
 
 // Create and export the model

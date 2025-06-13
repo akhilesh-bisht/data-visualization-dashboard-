@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-
+import cookieParser from 'cookie-parser'
 const app = express();
 
 // Enable CORS with specific origin and credentials
@@ -16,8 +16,13 @@ app.use(
   })
 );
 
-
 // Parse cookies
 app.use(cookieParser());
+
+// routes import
+import dataRoute from "./routes/data.route.js";
+
+//routes declarations
+app.use("/api",dataRoute );
 
 export {app} ;
