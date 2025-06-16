@@ -42,16 +42,37 @@ const Sidebar = ({ data, filters, onFilterChange }) => {
     </div>
   );
 
+  // Function to reset filters to default (empty or all)
+  const handleClearFilters = () => {
+    const defaultFilters = {
+      endYear: '',
+      topics: [],
+      sectors: [],
+      region: '',
+      pest: '',
+      swot: '',
+      source: '',
+      country: '',
+      city: '',
+    };
+    onFilterChange(defaultFilters);
+  };
+
   return (
     <div className="h-full flex flex-col">
       {/* Header */}
       <div className="p-4 border-b sticky top-0 bg-white z-10">
         <h2 className="text-lg font-semibold text-gray-800">Filters</h2>
+        <button
+          onClick={handleClearFilters}
+          className="mt-2 text-sm text-red-500 hover:text-red-700"
+        >
+          Clear Filters
+        </button>
       </div>
 
       {/* Scrollable filter content */}
       <div className="flex-1 overflow-y-auto p-4 space-y-6 text-sm text-gray-700">
-
         {/* End Year */}
         <div>
           <label className="block font-medium mb-1">End Year</label>
@@ -182,4 +203,3 @@ const Sidebar = ({ data, filters, onFilterChange }) => {
 };
 
 export default Sidebar;
-
