@@ -1,13 +1,19 @@
-// Dashboard.jsx
-import React, { useState, useEffect } from 'react';
-import { BarChart3, TrendingUp, PieChart, Database, Menu, X } from 'lucide-react';
-import Sidebar from './Sidebar';
-import BarChart from './charts/BarChart';
-import LineChart from './charts/LineChart';
-import PieChartComponent from './charts/PieChart';
-import DataTable from './DataTable';
-import LoadingSpinner from './LoadingSpinner';
-import { fetchDashboardData } from '../services/api';
+import React, { useState, useEffect } from "react";
+import {
+  BarChart3,
+  TrendingUp,
+  PieChart,
+  Database,
+  Menu,
+  X,
+} from "lucide-react";
+import Sidebar from "./Sidebar";
+import BarChart from "./charts/BarChart";
+import LineChart from "./charts/LineChart";
+import PieChartComponent from "./charts/PieChart";
+import DataTable from "./DataTable";
+import LoadingSpinner from "./LoadingSpinner";
+import { fetchDashboardData } from "../services/api";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
@@ -16,15 +22,15 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [filters, setFilters] = useState({
-    endYear: '',
+    endYear: "",
     topics: [],
     sectors: [],
-    region: '',
-    pest: '',
-    source: '',
-    swot: '',
-    country: '',
-    city: ''
+    region: "",
+    pest: "",
+    source: "",
+    swot: "",
+    country: "",
+    city: "",
   });
 
   useEffect(() => {
@@ -42,8 +48,10 @@ const Dashboard = () => {
       const response = await fetchDashboardData();
       setData(response);
     } catch (err) {
-      setError('Failed to load dashboard data. Please check your API connection.');
-      console.error('Error loading data:', err);
+      setError(
+        "Failed to load dashboard data. Please check your API connection."
+      );
+      console.error("Error loading data:", err);
     } finally {
       setLoading(false);
     }
@@ -53,31 +61,37 @@ const Dashboard = () => {
     let filtered = [...data];
 
     if (filters.endYear) {
-      filtered = filtered.filter(item => item.end_year?.toString() === filters.endYear);
+      filtered = filtered.filter(
+        (item) => item.end_year?.toString() === filters.endYear
+      );
     }
     if (filters.topics.length > 0) {
-      filtered = filtered.filter(item => item.topic && filters.topics.includes(item.topic));
+      filtered = filtered.filter(
+        (item) => item.topic && filters.topics.includes(item.topic)
+      );
     }
     if (filters.sectors.length > 0) {
-      filtered = filtered.filter(item => item.sector && filters.sectors.includes(item.sector));
+      filtered = filtered.filter(
+        (item) => item.sector && filters.sectors.includes(item.sector)
+      );
     }
     if (filters.region) {
-      filtered = filtered.filter(item => item.region === filters.region);
+      filtered = filtered.filter((item) => item.region === filters.region);
     }
     if (filters.pest) {
-      filtered = filtered.filter(item => item.pestle === filters.pest);
+      filtered = filtered.filter((item) => item.pestle === filters.pest);
     }
     if (filters.source) {
-      filtered = filtered.filter(item => item.source === filters.source);
+      filtered = filtered.filter((item) => item.source === filters.source);
     }
     if (filters.swot) {
-      filtered = filtered.filter(item => item.swot === filters.swot);
+      filtered = filtered.filter((item) => item.swot === filters.swot);
     }
     if (filters.country) {
-      filtered = filtered.filter(item => item.country === filters.country);
+      filtered = filtered.filter((item) => item.country === filters.country);
     }
     if (filters.city) {
-      filtered = filtered.filter(item => item.city === filters.city);
+      filtered = filtered.filter((item) => item.city === filters.city);
     }
 
     setFilteredData(filtered);
@@ -102,7 +116,9 @@ const Dashboard = () => {
           <div className="text-red-500 mb-4">
             <Database className="w-16 h-16 mx-auto" />
           </div>
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Connection Error</h2>
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">
+            Connection Error
+          </h2>
           <p className="text-gray-600 mb-4">{error}</p>
           <button
             onClick={loadData}
@@ -118,9 +134,11 @@ const Dashboard = () => {
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Sidebar */}
-      <div className={`fixed lg:static z-40 inset-y-0 left-0 transform ${
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      } lg:translate-x-0 transition-transform duration-300 ease-in-out w-80 bg-white shadow-lg border-r border-gray-200 overflow-y-auto`}>
+      <div
+        className={`fixed lg:static z-40 inset-y-0 left-0 transform ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0 transition-transform duration-300 ease-in-out w-80 bg-white shadow-lg border-r border-gray-200 overflow-y-auto`}
+      >
         <Sidebar
           data={data}
           filters={filters}
@@ -133,7 +151,9 @@ const Dashboard = () => {
       <div className="flex-1 overflow-y-auto">
         <div className="bg-white border-b border-gray-200 p-6 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-800">Analytics Dashboard</h1>
+            <h1 className="text-2xl font-bold text-gray-800">
+              Analytics Dashboard
+            </h1>
             <p className="text-gray-600 mt-1">
               Showing {filteredData.length} of {data.length} records
             </p>
@@ -142,7 +162,11 @@ const Dashboard = () => {
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="lg:hidden p-2 rounded-md border border-gray-300 text-gray-600 hover:bg-gray-100"
           >
-            {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {sidebarOpen ? (
+              <X className="w-5 h-5" />
+            ) : (
+              <Menu className="w-5 h-5" />
+            )}
           </button>
         </div>
 
@@ -152,7 +176,9 @@ const Dashboard = () => {
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                 <div className="flex items-center mb-4">
                   <BarChart3 className="w-5 h-5 text-blue-500 mr-2" />
-                  <h3 className="text-lg font-semibold text-gray-800">Intensity by Year</h3>
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    Intensity by Year
+                  </h3>
                 </div>
                 <BarChart data={filteredData} />
               </div>
@@ -162,7 +188,9 @@ const Dashboard = () => {
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                 <div className="flex items-center mb-4">
                   <PieChart className="w-5 h-5 text-emerald-500 mr-2" />
-                  <h3 className="text-lg font-semibold text-gray-800">Topics Distribution</h3>
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    Topics Distribution
+                  </h3>
                 </div>
                 <PieChartComponent data={filteredData} />
               </div>
@@ -172,7 +200,9 @@ const Dashboard = () => {
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                 <div className="flex items-center mb-4">
                   <TrendingUp className="w-5 h-5 text-indigo-500 mr-2" />
-                  <h3 className="text-lg font-semibold text-gray-800">Likelihood Trend Over Years</h3>
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    Likelihood Trend Over Years
+                  </h3>
                 </div>
                 <LineChart data={filteredData} />
               </div>

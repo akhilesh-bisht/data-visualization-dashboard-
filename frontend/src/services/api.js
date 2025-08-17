@@ -1,12 +1,13 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_BASE_URL = 'https://data-visualization-dashboard-29c2.onrender.com/api';
+const API_BASE_URL =
+  "https://data-visualization-dashboard-29c2.onrender.com/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   timeout: 10000,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
@@ -21,8 +22,8 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.code === 'ECONNREFUSED' || error.code === 'ERR_NETWORK') {
-      console.error('⚠️ Backend not running at http://localhost:5000');
+    if (error.code === "ECONNREFUSED" || error.code === "ERR_NETWORK") {
+      console.error("⚠️ Backend not running at http://localhost:5000");
     }
     return Promise.reject(error);
   }
@@ -33,7 +34,7 @@ export const fetchDashboardData = async (filters = {}) => {
     const params = new URLSearchParams();
 
     Object.entries(filters).forEach(([key, value]) => {
-      if (value && value !== '') {
+      if (value && value !== "") {
         if (Array.isArray(value)) {
           value.forEach((v) => params.append(key, v));
         } else {
@@ -43,13 +44,13 @@ export const fetchDashboardData = async (filters = {}) => {
     });
 
     const query = params.toString();
-    const url = query ? `/data?${query}` : '/data';
+    const url = query ? `/data?${query}` : "/data";
     const response = await api.get(url);
 
     // ✅ Ensure you always return an array
     return Array.isArray(response.data) ? response.data : response.data.message;
   } catch (error) {
-    console.error('Error fetching dashboard data:', error);
+    console.error("Error fetching dashboard data:", error);
     throw error;
   }
 };
